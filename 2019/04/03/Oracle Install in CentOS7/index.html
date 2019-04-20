@@ -1,12 +1,101 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="utf-8">
-  
+
+
+
+
+
+
+
+
+
+
+
 
   
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
   <meta name="description" content="@TOC 1.学习几个基本Linux终端指令　　由于Linux和Windows的软件安装方式有很大的不同，所以基本上都是需要在终端上敲命令行代码实现的。　　一、cd（change directory）切换目录　　$cd　　　　　直接回到根目录　　$cd ..　　　　回到上级目录　　$cd 路径名　　切换至该路径　　二、ls　查看文件或目录　　$ls　　　　　查看当前目录的文件与目录　　$cd 路径">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
@@ -23,63 +112,281 @@
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="@TOC 1.学习几个基本Linux终端指令　　由于Linux和Windows的软件安装方式有很大的不同，所以基本上都是需要在终端上敲命令行代码实现的。　　一、cd（change directory）切换目录　　$cd　　　　　直接回到根目录　　$cd ..　　　　回到上级目录　　$cd 路径名　　切换至该路径　　二、ls　查看文件或目录　　$ls　　　　　查看当前目录的文件与目录　　$cd 路径">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190408233533957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNjcwMzA0,size_16,color_FFFFFF,t_70">
+
+
+
+
+
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
+  <link rel="canonical" href="http://yoursite.com/2019/04/03/Oracle Install in CentOS7/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | Hexo</title>
   
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
-</html>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">Home</a>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-Oracle Install in CentOS7" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/03/Oracle Install in CentOS7/" class="article-date">
-  <time datetime="2019-04-03T06:14:24.564Z" itemprop="datePublished">2019-04-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
+          
+          <li class="menu-item menu-item-home">
+
     
     
-    <div class="article-entry" itemprop="articleBody">
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/03/Oracle Install in CentOS7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-04-03 14:14:24" itemprop="dateCreated datePublished" datetime="2019-04-03T14:14:24+08:00">2019-04-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-04-19 15:41:22" itemprop="dateModified" datetime="2019-04-19T15:41:22+08:00">2019-04-19</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <p>@<a href="再次入魂——小白在CentOS7.6环境下部署Oracle11g服务器并使用Windows客户端连接">TOC</a></p>
 <h1 id="1-学习几个基本Linux终端指令"><a href="#1-学习几个基本Linux终端指令" class="headerlink" title="1.学习几个基本Linux终端指令"></a>1.学习几个基本Linux终端指令</h1><p>　　由于Linux和Windows的软件安装方式有很大的不同，所以基本上都是需要在终端上敲命令行代码实现的。<br>　　一、cd（change directory）切换目录<br>　　<code>$cd　　　　　直接回到根目录</code><br>　　<code>$cd ..　　　　回到上级目录</code><br>　　<code>$cd 路径名　　切换至该路径</code><br>　　二、ls　查看文件或目录<br>　　<code>$ls　　　　　查看当前目录的文件与目录</code><br>　　<code>$cd 路径名　　查看该路径下的文件与目录</code><br>　　ls命令常用于检查目录下的文件及目录。这样我们就不用费力地去找文件管理器下的文件而是可以直接在终端中查看。当我们不确定自己创建的目录是否成功时可以轻松地使用ls查看。<br>　　三、su 和 sudo<br>　　有些时候一些指令需要我们拥有管理员权限方能执行，这个时候这两个指令就非常重要。<br>　　<code>su</code><br>　　进入root模式。su命令执行后，你需要在终端输入root密码，在终端中，密码是不显示的，输完直接敲回车即可。这是系统root用户，拥有很高的权限。值得注意的是，Ubuntu刚安装好是没有激活root的，需要我们手动激活。这时我们需要sudo指令。<br>　　<code>sudo</code><br>　　在指令的前面加上sudo 即可在管理员模式下执行指令。当然，密码还是要输的，这里输的密码是你的系统用户密码（开机密码）而不是root密码。<br>　　<code>sudo passwd root</code><br>　　执行该指令即可设定root密码。<br>　　四、vim 文档编辑<br>　　这个指令我们会在环境变量及配置文档的修改编辑中遇到。系统没有的话可在root模式中通过指令安装<br>　　<code>yum -y install vim</code><br>　　安装好之后使用指令<code>vim xxx</code>进入xxx文件。键盘敲击’i’即可进入insert模式。编辑完毕后按’esc’,在键盘上输入 <strong>‘:wq’</strong> 保存并退出。记住一定要加’冒号‘。不想保存的话用’:q’。</p>
@@ -125,114 +432,345 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/03/Oracle Install in CentOS7/" data-id="cjup5flem0002jwqyyj9r2h98" class="article-share-link">Share</a>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/09/Oracle Install/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/17/springnote1/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
     </footer>
   </div>
   
-    
-<nav id="article-nav">
   
-    <a href="/2019/04/17/springnote1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
         
-          (no title)
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-学习几个基本Linux终端指令"><span class="nav-number">1.</span> <span class="nav-text">1.学习几个基本Linux终端指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-安装Java并配置环境变量"><span class="nav-number">2.</span> <span class="nav-text">2.安装Java并配置环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-安装前的准备工作"><span class="nav-number">3.</span> <span class="nav-text">3.安装前的准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、用户组创建并更改OS系统标志"><span class="nav-number">3.1.</span> <span class="nav-text">一、用户组创建并更改OS系统标志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、创建Oracle数据库安装目录"><span class="nav-number">3.2.</span> <span class="nav-text">二、创建Oracle数据库安装目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-、依赖包的安装"><span class="nav-number">3.3.</span> <span class="nav-text">三 、依赖包的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置系统内核参数"><span class="nav-number">3.4.</span> <span class="nav-text">四、配置系统内核参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、配置Oracle环境变量"><span class="nav-number">3.5.</span> <span class="nav-text">五、配置Oracle环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、正式安装"><span class="nav-number">3.6.</span> <span class="nav-text">三、正式安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置监听并创建数据库实例测试"><span class="nav-number">3.7.</span> <span class="nav-text">四、配置监听并创建数据库实例测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1）配置监听"><span class="nav-number">3.8.</span> <span class="nav-text">1）配置监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）创建一个Oracle数据库实例"><span class="nav-number">3.9.</span> <span class="nav-text">2）创建一个Oracle数据库实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3）测试"><span class="nav-number">3.10.</span> <span class="nav-text">3）测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-使用Windows客户机连接服务器上的Oracle"><span class="nav-number">4.</span> <span class="nav-text">4.使用Windows客户机连接服务器上的Oracle</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、创建用户"><span class="nav-number">4.1.</span> <span class="nav-text">一、创建用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、使用创建的用户连接数据库"><span class="nav-number">4.2.</span> <span class="nav-text">二、使用创建的用户连接数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）使用Oracle-SQL-developor"><span class="nav-number">4.2.1.</span> <span class="nav-text">1）使用Oracle SQL developor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）使用控制台连接数据库"><span class="nav-number">4.2.2.</span> <span class="nav-text">2）使用控制台连接数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料："><span class="nav-number">5.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
         
       </div>
-    </a>
-  
-  
-    <a href="/2019/03/09/Oracle Install/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
-    </a>
-  
-</nav>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
 
   
-</article>
 
-</section>
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
+
+
+
+
         
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2019/04/17/springnote1/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/03/Oracle Install in CentOS7/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/09/Oracle Install/">(no title)</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
-  
-</aside>
+
+
+
+
+
         
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    
 
+    
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
+    
   </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
