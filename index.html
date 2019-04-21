@@ -340,7 +340,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/04/21/spring笔记day02/" class="post-title-link" itemprop="url">spring笔记day02</a>
+                <a href="/2019/04/21/spring笔记day02/" class="post-title-link" itemprop="url">spring笔记02</a>
               
             
           </h1>
@@ -365,9 +365,13 @@
                 
               
 
-              <time title="创建时间：2019-04-21 18:33:26" itemprop="dateCreated datePublished" datetime="2019-04-21T18:33:26+08:00">2019-04-21</time>
+              <time title="创建时间：2019-04-21 18:33:26 / 修改时间：21:29:32" itemprop="dateCreated datePublished" datetime="2019-04-21T18:33:26+08:00">2019-04-21</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -402,7 +406,56 @@
       
         
           
-            
+            <h1 id="sping学习笔记02"><a href="#sping学习笔记02" class="headerlink" title="sping学习笔记02"></a>sping学习笔记02</h1><h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><ul>
+<li>spring基于注解的IOC以及IOC的案例</li>
+<li>spring中IOC的常用注解</li>
+<li>案例使用xml方式和注解方式时间单表的CRUD操作<br>　　　　　　　　持久层技术选择：dbutils</li>
+<li>改造基于注解的IOC案例，使用纯注解的方式实现<br>　　　 　　　　　　　　spring的一些新注解使用</li>
+<li>spring和Junit整合<h2 id="1-基于注解的IOC配置"><a href="#1-基于注解的IOC配置" class="headerlink" title="1 基于注解的IOC配置"></a>1 基于注解的IOC配置</h2>注解和xml对应分为四类</li>
+<li>1.用于创建对象的注解。相当于在xml文件中编写的 &#60;bean&#62;标签。</li>
+<li>2.用于注入数据的注解。相当于在xml文件中的&#60;bean&#62;标签中写一个&#60;property&#62;标签。</li>
+<li>3.用于改变作用范围的注解。相当于在xml文件中的&#60;bean&#62;标签中使用scope属性。</li>
+<li>4.和生命周期相关。相当于在&#60;bean&#62;标签中使用init-method和destroy-method。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--告知spring在创建容器时要扫描的包，配置所需要的标签不是在beans的约束中，而是一个名称为context名称空间和约束中--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.itheima"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="1-1-用于创建对象的注解"><a href="#1-1-用于创建对象的注解" class="headerlink" title="1.1 用于创建对象的注解"></a>1.1 用于创建对象的注解</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>@Component</em></td>
+<td>把当前类对象存入spring容器中</td>
+<td><em>value</em></td>
+<td>用于指定bean的id。默认值是当前类名且首字母小写</td>
+</tr>
+<tr>
+<td><em>@Controller</em></td>
+<td>用于表现层</td>
+<td>同上</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><em>@Service</em></td>
+<td>用于业务层</td>
+<td>同上</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><em>@Repository</em></td>
+<td>用于持久层</td>
+<td>同上</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(value=<span class="string">"accountservice"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span>(value=<span class="string">"accountservice"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.获取核心容器对象</span></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);</span><br><span class="line">       <span class="comment">// 2.根据id获取bean对象</span></span><br><span class="line">        IAccountService as =(IAccountService)ac.getBean(<span class="string">"accountservice"</span>);</span><br><span class="line">        IAccountDao adao =ac.getBean(<span class="string">"accountDao"</span>,IAccountDao.class);</span><br><span class="line">        System.out.println(as);</span><br><span class="line">        System.out.println(adao);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1095,7 +1148,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
