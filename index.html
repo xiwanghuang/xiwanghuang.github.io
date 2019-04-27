@@ -320,6 +320,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/spring笔记day02-spring整合Junit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="皇叔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是你皇叔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/26/spring笔记day02-spring整合Junit/" class="post-title-link" itemprop="url">spring笔记day02-spring整合Junit</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 20:03:48" itemprop="dateCreated datePublished" datetime="2019-04-26T20:03:48+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-28 00:20:19" itemprop="dateModified" datetime="2019-04-28T00:20:19+08:00">2019-04-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="spring笔记day02-spring整合Junit"><a href="#spring笔记day02-spring整合Junit" class="headerlink" title="spring笔记day02-spring整合Junit"></a>spring笔记day02-spring整合Junit</h2><p>应用程序的入口为main()方法。junit单元测试中，没有main()方法也能执行，因为junit集成了一个main()方法。该方法可以判断当前测试类中哪些方法有<code>@Test</code>注解。junit就会让有注解的方法执行。junit并不会馆管我们是否采用spring框架。因此在执行测试方法时，junit不会为我们读取配置文件/配置类创建spring核心容器。所以就算写了<code>@Autowired</code>注解，也不会为我们注入数据。<br>解决思路：使用能加载spring容器的main()方法。<br>解决方法：</p>
+<ul>
+<li>1.导入spring-test的jar包  </li>
+<li>2.使用junit提供的注解把原有的main（）方法替换成spring提供的  <pre><code>@Runwith  
+</code></pre></li>
+<li>3.告知spring的运行器（基于xml还是注解），并说明位置<br>@ContextConfiguration:（当使用spring5.x版本时，要求junit的jar包必须是4.1.2及以上） <pre><code>location:指定xml文件的位置，加上classpath关键字，表示在类路径下  
+classes:指定注解类所在的位置  
+</code></pre><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@ContextConfiguration</span>(classes = SpringConfiguration.class)</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@ContextConfiguration</span>(locations = <span class="string">"classpath:bean.xml"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line"><span class="comment">//    private ApplicationContext ac;</span></span><br><span class="line">    <span class="keyword">private</span> IAccountService as = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3.执行方法</span></span><br><span class="line">        List&lt;Account&gt; accounts = as.findAllAcccount();</span><br><span class="line">        <span class="keyword">for</span>(Account account : accounts)</span><br><span class="line">        &#123;</span><br><span class="line">            System.out.println(account);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/spring笔记day02-spring的新注解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -365,7 +529,7 @@
                 
               
 
-              <time title="创建时间：2019-04-26 14:53:29 / 修改时间：20:02:37" itemprop="dateCreated datePublished" datetime="2019-04-26T14:53:29+08:00">2019-04-26</time>
+              <time title="创建时间：2019-04-26 14:53:29 / 修改时间：20:24:37" itemprop="dateCreated datePublished" datetime="2019-04-26T14:53:29+08:00">2019-04-26</time>
             
 
             
@@ -546,7 +710,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-26 14:52:42" itemprop="dateModified" datetime="2019-04-26T14:52:42+08:00">2019-04-26</time>
+                <time title="修改时间：2019-04-26 20:24:58" itemprop="dateModified" datetime="2019-04-26T20:24:58+08:00">2019-04-26</time>
               
             
           </span>
@@ -592,7 +756,7 @@
 <h2 id="测试对数据库的增删改查"><a href="#测试对数据库的增删改查" class="headerlink" title="测试对数据库的增删改查"></a>测试对数据库的增删改查</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.获取容器</span></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);</span><br><span class="line">        <span class="comment">//2.得到业务层对象</span></span><br><span class="line">        IAccountService as = ac.getBean(<span class="string">"accountService"</span>,IAccountService.class);</span><br><span class="line">        <span class="comment">//3.执行方法</span></span><br><span class="line">        List&lt;Account&gt; accounts = as.findAllAcccount();</span><br><span class="line">        <span class="keyword">for</span>(Account account : accounts)</span><br><span class="line">        &#123;</span><br><span class="line">            System.out.println(account);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindOne</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.获取容器</span></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);</span><br><span class="line">        <span class="comment">//2.得到业务层对象</span></span><br><span class="line">        IAccountService as = ac.getBean(<span class="string">"accountService"</span>,IAccountService.class);</span><br><span class="line">        <span class="comment">//3.执行方法</span></span><br><span class="line">        Account account = as.findAccountByid(<span class="number">1</span>);</span><br><span class="line">            System.out.println(account);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);</span><br><span class="line">        <span class="comment">//2.得到业务层对象</span></span><br><span class="line">        IAccountService as = ac.getBean(<span class="string">"accountService"</span>,IAccountService.class);</span><br><span class="line"></span><br><span class="line">        Account account = as.findAccountByid(<span class="number">4</span>);</span><br><span class="line">        account.setMoney(<span class="number">123456f</span>);</span><br><span class="line">        as.updateAccount(account);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Account account = <span class="keyword">new</span> Account();</span><br><span class="line">        account.setName(<span class="string">"test"</span>);</span><br><span class="line">        account.setMoney(<span class="number">12345f</span>);</span><br><span class="line"></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);</span><br><span class="line">        <span class="comment">//2.得到业务层对象</span></span><br><span class="line">        IAccountService as = ac.getBean(<span class="string">"accountService"</span>,IAccountService.class);</span><br><span class="line"></span><br><span class="line">        as.saveAccount(account);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.获取容器</span></span><br><span class="line">        ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"bean.xml"</span>);</span><br><span class="line">        <span class="comment">//2.得到业务层对象</span></span><br><span class="line">        IAccountService as = ac.getBean(<span class="string">"accountService"</span>,IAccountService.class);</span><br><span class="line">        <span class="comment">//3.执行方法</span></span><br><span class="line">        Account account = as.findAccountByid(<span class="number">4</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="基于注解的IOC改造案例"><a href="#基于注解的IOC改造案例" class="headerlink" title="基于注解的IOC改造案例"></a>基于注解的IOC改造案例</h2><p>重新配置bean.xml。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--告知spring在创建容器时要扫描的包--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.itheima"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置QueryRunner--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span> = <span class="string">"runner"</span> <span class="attr">class</span> = <span class="string">"org.apache.commons.dbutils.QueryRunner"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--注入数据源(使用构造函数)--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span> = <span class="string">"ds"</span> <span class="attr">ref</span> = <span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置数据源--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span> = <span class="string">"dataSource"</span> <span class="attr">class</span> = <span class="string">"com.mchange.v2.c3p0.ComboPooledDataSource"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--注入连接数据库的必备信息--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClass"</span> <span class="attr">value</span> = <span class="string">"com.mysql.jdbc.Driver"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jdbcUrl"</span> <span class="attr">value</span> = <span class="string">"jdbc:mysql://localhost:3306/eesy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">value</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span> = <span class="string">"123456"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>改造配置代码成为纯注解。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span>(<span class="string">"accountService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountServiceImpl</span> <span class="keyword">implements</span> <span class="title">IAccountService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IAccountDao accountDao;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span>(<span class="string">"accountDao"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountDaoImpl</span> <span class="keyword">implements</span> <span class="title">IAccountDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QueryRunner runner;</span><br></pre></td></tr></table></figure></p>
-<p>以上即为spring的ioc案例。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上即为spring的ioc案例实现。尽管我们将对象的创建和数据的注入都交给了spring，但依然存在几个问题：<br>1.test类中代码冗余<br>2.无法脱离xml文件</p>
 
           
         
@@ -1483,7 +1647,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
