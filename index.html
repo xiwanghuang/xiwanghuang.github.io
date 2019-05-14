@@ -365,7 +365,7 @@
                 
               
 
-              <time title="创建时间：2019-05-14 09:30:48 / 修改时间：15:17:26" itemprop="dateCreated datePublished" datetime="2019-05-14T09:30:48+08:00">2019-05-14</time>
+              <time title="创建时间：2019-05-14 09:30:48 / 修改时间：16:23:05" itemprop="dateCreated datePublished" datetime="2019-05-14T09:30:48+08:00">2019-05-14</time>
             
 
             
@@ -406,17 +406,17 @@
       
         
           
-            <h1 id="个人工作"><a href="#个人工作" class="headerlink" title="个人工作"></a>个人工作</h1><p>翻看何江师兄发的文档</p>
-<h2 id="基于时延的拥塞控制"><a href="#基于时延的拥塞控制" class="headerlink" title="基于时延的拥塞控制"></a>基于时延的拥塞控制</h2><p>将时延的增加视为出现拥塞，时延增加时减小拥塞窗口，延时降低时增加拥塞窗口</p>
-<h3 id="Vegas"><a href="#Vegas" class="headerlink" title="Vegas"></a>Vegas</h3><p>通过比较实际吞吐量和期望吞吐量来调节拥塞窗口的大小。<br>期望吞吐量：Expected=cwnd/BaseRTT<br>实际吞吐量：Actual=cwnd/RTT<br><strong>diff</strong>=(Expected-Actual)*BaseRTT<br><strong>BaseRTT</strong>是所有观测来回响应时间的最小值。</p>
+            <p>翻看何江师兄发的文档</p>
+<h1 id="基于时延的拥塞控制"><a href="#基于时延的拥塞控制" class="headerlink" title="基于时延的拥塞控制"></a>基于时延的拥塞控制</h1><p>将时延的增加视为出现拥塞，时延增加时减小拥塞窗口，延时降低时增加拥塞窗口</p>
+<h2 id="Vegas"><a href="#Vegas" class="headerlink" title="Vegas"></a>Vegas</h2><p>通过比较实际吞吐量和期望吞吐量来调节拥塞窗口的大小。<br>期望吞吐量：Expected=cwnd/BaseRTT<br>实际吞吐量：Actual=cwnd/RTT<br><strong>diff</strong>=(Expected-Actual)*BaseRTT<br><strong>BaseRTT</strong>是所有观测来回响应时间的最小值。</p>
 <ul>
 <li>当a ≤ diff ≤ b 时，拥塞窗口不变</li>
 <li>当diff &lt; a 时，拥塞窗口增加</li>
 <li>当diff &gt; b 时，拥塞窗口减小  </li>
 </ul>
 <p>当网络中Vegase算法与基于丢包的拥塞控制算法共存的情况下，后者会去尝试填满网络中的缓冲区，导致Vegas计算的RTT增大，进而使得传输速度越来越慢。</p>
-<h2 id="基于链路容量的拥塞控制"><a href="#基于链路容量的拥塞控制" class="headerlink" title="基于链路容量的拥塞控制"></a>基于链路容量的拥塞控制</h2><p>实时测量网络带宽和时延，认为网络上报文总量大于带宽和时延的乘积时出现了拥塞。</p>
-<h3 id="BBR"><a href="#BBR" class="headerlink" title="BBR"></a>BBR</h3><p>周期性探测网络的容量，交替测量一段时间内的带宽极大值和时延极小值，将其乘积作为拥塞窗口大小，保持拥塞窗口的值始终和网络的容量保持一致。</p>
+<p>##基于链路容量的拥塞控制<br>实时测量网络带宽和时延，认为网络上报文总量大于带宽和时延的乘积时出现了拥塞。</p>
+<h2 id="BBR"><a href="#BBR" class="headerlink" title="BBR"></a>BBR</h2><p>周期性探测网络的容量，交替测量一段时间内的带宽极大值和时延极小值，将其乘积作为拥塞窗口大小，保持拥塞窗口的值始终和网络的容量保持一致。</p>
 <ul>
 <li><strong>RTprop</strong>：往返时延<br>光信号从A端到B端的最小时延(其实是二倍时延，因为是一个来回)</li>
 <li><strong>BtlBW(bottleneck bandwidth)</strong>：瓶颈带宽<br>A到B的链路中，它的带宽取决于最慢的那段链路的带宽，即为瓶颈带宽</li>
