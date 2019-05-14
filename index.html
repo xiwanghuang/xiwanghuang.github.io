@@ -320,6 +320,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/14/20190514学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="皇叔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是你皇叔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/14/20190514学习笔记/" class="post-title-link" itemprop="url">20190513个人工作</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-14 09:30:48 / 修改时间：15:17:26" itemprop="dateCreated datePublished" datetime="2019-05-14T09:30:48+08:00">2019-05-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="个人工作"><a href="#个人工作" class="headerlink" title="个人工作"></a>个人工作</h1><p>翻看何江师兄发的文档</p>
+<h2 id="基于时延的拥塞控制"><a href="#基于时延的拥塞控制" class="headerlink" title="基于时延的拥塞控制"></a>基于时延的拥塞控制</h2><p>将时延的增加视为出现拥塞，时延增加时减小拥塞窗口，延时降低时增加拥塞窗口</p>
+<h3 id="Vegas"><a href="#Vegas" class="headerlink" title="Vegas"></a>Vegas</h3><p>通过比较实际吞吐量和期望吞吐量来调节拥塞窗口的大小。<br>期望吞吐量：Expected=cwnd/BaseRTT<br>实际吞吐量：Actual=cwnd/RTT<br><strong>diff</strong>=(Expected-Actual)*BaseRTT<br><strong>BaseRTT</strong>是所有观测来回响应时间的最小值。</p>
+<ul>
+<li>当a ≤ diff ≤ b 时，拥塞窗口不变</li>
+<li>当diff &lt; a 时，拥塞窗口增加</li>
+<li>当diff &gt; b 时，拥塞窗口减小  </li>
+</ul>
+<p>当网络中Vegase算法与基于丢包的拥塞控制算法共存的情况下，后者会去尝试填满网络中的缓冲区，导致Vegas计算的RTT增大，进而使得传输速度越来越慢。</p>
+<h2 id="基于链路容量的拥塞控制"><a href="#基于链路容量的拥塞控制" class="headerlink" title="基于链路容量的拥塞控制"></a>基于链路容量的拥塞控制</h2><p>实时测量网络带宽和时延，认为网络上报文总量大于带宽和时延的乘积时出现了拥塞。</p>
+<h3 id="BBR"><a href="#BBR" class="headerlink" title="BBR"></a>BBR</h3><p>周期性探测网络的容量，交替测量一段时间内的带宽极大值和时延极小值，将其乘积作为拥塞窗口大小，保持拥塞窗口的值始终和网络的容量保持一致。</p>
+<ul>
+<li><strong>RTprop</strong>：往返时延<br>光信号从A端到B端的最小时延(其实是二倍时延，因为是一个来回)</li>
+<li><strong>BtlBW(bottleneck bandwidth)</strong>：瓶颈带宽<br>A到B的链路中，它的带宽取决于最慢的那段链路的带宽，即为瓶颈带宽</li>
+<li><strong>inflight data</strong>：干扰数据<br>A已经发出但未收到B返回的ACK数据</li>
+<li><strong>BDP(bandwidth-delay product)</strong>：时延带宽积<br>BDP=BtlBW*RTprop</li>
+<li><strong>pacing_gain</strong>：控制发送速度的增益系数</li>
+<li><strong>cwnd_gain</strong>：窗口增益系数<br>与BDP相乘，控制inflight数量</li>
+<li><strong>min_rtt</strong>：windows_min(rtt,10 seconds)</li>
+<li><strong>pacing_rate</strong>：pacing_gain * bw</li>
+<li><strong>cwnd</strong>：max(cwnd_gain <em> bw </em> min_rtt)</li>
+<li><strong>FQ(Fair queue)</strong>：公平队列<br>根据bbr设置的pacing rate将一个cwnd内的数据的发送从“突发到网络”这种行为变换到“平缓发送到网络”的行为。<h4 id="1-测量瓶颈带宽和往返时延"><a href="#1-测量瓶颈带宽和往返时延" class="headerlink" title="1.测量瓶颈带宽和往返时延"></a>1.测量瓶颈带宽和往返时延</h4>BBR解决带宽和延迟无法同时测准的方法是：交替测量带宽和延迟；用一段时间内的带宽极大值和延迟极小值作为估计值。<br>最大带宽的值可以用win_minmax计算。保存一个时间窗口内的“最有意义的最大值或者最小值”，在时间流逝的过程中，时间窗口不断向后华东，在需要时间窗口内极值的时候只需取保存的三个值中的第一个值即可。win_minmax算法本身保证了时间窗口随着时间的华东以及窗口内极值的冒泡更新。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/spring笔记day02-spring整合Junit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1644,7 +1809,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1671,7 +1836,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
