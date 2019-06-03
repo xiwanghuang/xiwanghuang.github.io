@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="TCL简介变量和变量赋值无需事先声明，使用set指令对变量进行首次赋值，使用变量时前面要加$符号。12set a &quot;hello world&quot;puts &quot;NS2 say $&quot; 字符串使用双引号将其括起来为单词赋值。 表达式tcl包含很多表达式，使用expr指令求数学表达式的值或关系表达式的真假。1set value [expr 2+3] 指令替代使用中括号进行指令替代。指令替代可以将“tcl脚本的执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NS2学习笔记（一）">
+<meta property="og:url" content="http://yoursite.com/2019/05/29/NS2学习笔记（一）/index.html">
+<meta property="og:site_name" content="我是你皇叔">
+<meta property="og:description" content="TCL简介变量和变量赋值无需事先声明，使用set指令对变量进行首次赋值，使用变量时前面要加$符号。12set a &quot;hello world&quot;puts &quot;NS2 say $&quot; 字符串使用双引号将其括起来为单词赋值。 表达式tcl包含很多表达式，使用expr指令求数学表达式的值或关系表达式的真假。1set value [expr 2+3] 指令替代使用中括号进行指令替代。指令替代可以将“tcl脚本的执">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-31T07:39:31.539Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NS2学习笔记（一）">
+<meta name="twitter:description" content="TCL简介变量和变量赋值无需事先声明，使用set指令对变量进行首次赋值，使用变量时前面要加$符号。12set a &quot;hello world&quot;puts &quot;NS2 say $&quot; 字符串使用双引号将其括起来为单词赋值。 表达式tcl包含很多表达式，使用expr指令求数学表达式的值或关系表达式的真假。1set value [expr 2+3] 指令替代使用中括号进行指令替代。指令替代可以将“tcl脚本的执">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/05/29/NS2学习笔记（一）/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>NS2学习笔记（一） | 我是你皇叔</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我是你皇叔</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/29/NS2学习笔记（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="皇叔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是你皇叔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NS2学习笔记（一）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-29 15:58:38" itemprop="dateCreated datePublished" datetime="2019-05-29T15:58:38+08:00">2019-05-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-31 15:39:31" itemprop="dateModified" datetime="2019-05-31T15:39:31+08:00">2019-05-31</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="TCL简介"><a href="#TCL简介" class="headerlink" title="TCL简介"></a>TCL简介</h1><h2 id="变量和变量赋值"><a href="#变量和变量赋值" class="headerlink" title="变量和变量赋值"></a>变量和变量赋值</h2><p>无需事先声明，使用set指令对变量进行首次赋值，使用变量时前面要加$符号。<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> a <span class="string">"hello world"</span></span><br><span class="line"><span class="keyword">puts</span> <span class="string">"NS2 say $"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>使用双引号将其括起来为单词赋值。</p>
+<h2 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h2><p>tcl包含很多表达式，使用expr指令求数学表达式的值或关系表达式的真假。<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> value [<span class="keyword">expr</span> <span class="number">2</span>+<span class="number">3</span>]</span><br></pre></td></tr></table></figure></p>
+<h2 id="指令替代"><a href="#指令替代" class="headerlink" title="指令替代"></a>指令替代</h2><p>使用中括号进行指令替代。指令替代可以将“tcl脚本的执行结果”取代“tcl脚本”。<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">puts</span> <span class="string">"I am [expr 10*2] years old"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><ul>
+<li><p>选择结构</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>&#123;$a==<span class="string">"hello"</span>&#125;&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">else <span class="keyword">if</span>&#123;&#125;&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> $a&#123;</span><br><span class="line">    <span class="number">2</span> &#123;<span class="keyword">puts</span> $a&#125;</span><br><span class="line">    <span class="number">3</span> &#123;&#125;</span><br><span class="line">    default &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>循环结构</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> &#123;<span class="keyword">set</span> i <span class="number">0</span>&#125;&#123;$i&lt;<span class="number">5</span>&gt;&#125;&#123;<span class="keyword">incr</span> i <span class="number">1</span>&#125;&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>( $i&lt;<span class="number">5</span> )&#123;</span><br><span class="line">    <span class="keyword">incr</span> i <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> vowel &#123;a e i o u&#125;&#123;</span><br><span class="line">    <span class="keyword">puts</span> <span class="string">"$vowel is a vowel"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>与c++函数类似<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span><span class="title"> sum_proc</span> &#123;a b&#125;&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">expr</span> $a + $b]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">puts</span> <span class="string">"sum is [sum_proc 1 2]"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>无需像C语言一样需要事先声明数组大小<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> a(<span class="number">0</span>) <span class="string">"Zero"</span></span><br><span class="line"><span class="keyword">puts</span> $a(0)</span><br></pre></td></tr></table></figure></p>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> f [<span class="keyword">open</span> <span class="string">"filename"</span> <span class="string">"w/r"</span>]</span><br><span class="line"><span class="keyword">puts</span> $f <span class="string">"1"</span></span><br><span class="line"><span class="keyword">close</span> $f</span><br></pre></td></tr></table></figure>
+<h2 id="eval命令"><a href="#eval命令" class="headerlink" title="eval命令"></a>eval命令</h2><p>语法：<code>eval arg1.arg2.arg3,...</code><br>含义：将所有的参数连起来作为命令语句执行<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">file</span>.txt中存放</span><br><span class="line"><span class="number">1</span> + <span class="number">2</span></span><br><span class="line"><span class="number">4</span> + <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> infile [<span class="keyword">open</span> <span class="string">"/file.txt"</span> <span class="string">"r"</span>]</span><br><span class="line"><span class="keyword">while</span> &#123;[<span class="keyword">gets</span> $infile Op]&lt;=<span class="number">0</span>&#125;&#123;</span><br><span class="line">    <span class="keyword">set</span> Operation <span class="string">"expr $Op"</span></span><br><span class="line">    <span class="keyword">set</span> results [<span class="keyword">eval</span> $Operation]</span><br><span class="line">    <span class="keyword">puts</span> stdout <span class="string">"$Op = $Results\n"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>动态构造Tcl命令，然后解析并执行。</p>
+<h2 id="error和catch命令"><a href="#error和catch命令" class="headerlink" title="error和catch命令"></a>error和catch命令</h2><p>相当于throw expection.<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span><span class="title"> div</span> &#123;a b&#125;&#123;</span><br><span class="line">    <span class="keyword">if</span>&#123;$b==<span class="number">0</span>&#125;&#123;</span><br><span class="line">        <span class="keyword">error</span> <span class="string">"divided by zero"</span></span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        <span class="keyword">return</span> [<span class="keyword">expr</span> $a/$b]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">div <span class="number">1</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="upvar和uplevel命令"><a href="#upvar和uplevel命令" class="headerlink" title="upvar和uplevel命令"></a>upvar和uplevel命令</h2><ul>
+<li><p>upvar可以使用户在过程中对全局变量或者其他过程中的局部变量进行访问</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span><span class="title"> decer</span> &#123;n m&#125;&#123;</span><br><span class="line">  <span class="keyword">upvar</span> $n upa</span><br><span class="line">  <span class="keyword">set</span> upa [<span class="keyword">expr</span> $upa-$m]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">set</span> nb <span class="number">12</span></span><br><span class="line">decer nb <span class="number">3</span></span><br><span class="line"><span class="keyword">puts</span> $nb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>uplevel可以改变上一级栈中的变量值</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">proc</span><span class="title"> ff</span> &#123;&#125;&#123;</span><br><span class="line">    <span class="keyword">set</span> a ff #设置了局部的a</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">set</span> a <span class="keyword">global</span></span><br><span class="line">ff</span><br><span class="line"><span class="keyword">puts</span> $a</span><br><span class="line">输出结果： <span class="keyword">global</span></span><br><span class="line">对比：</span><br><span class="line"><span class="keyword">proc</span><span class="title"> ff</span>&#123;&#125;&#123;</span><br><span class="line">    <span class="keyword">uplevel</span> <span class="keyword">set</span> a ff # 改变了上一级栈中的a</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">set</span> a <span class="keyword">global</span></span><br><span class="line">ff</span><br><span class="line"><span class="keyword">puts</span> $a</span><br><span class="line">输出:ff</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="OTcl简介"><a href="#OTcl简介" class="headerlink" title="OTcl简介"></a>OTcl简介</h1><h2 id="OTcl和C-的区别"><a href="#OTcl和C-的区别" class="headerlink" title="OTcl和C++的区别"></a>OTcl和C++的区别</h2><ul>
+<li>C++在一对{}中完成对一个类的定义，而OTcl则是写成多个分开的部分，每一个方法给类增加一个成员函数，OTcl中成员变量是在成员函数中定义。</li>
+<li>C++中的构造函数和析构函数对应OTcl语言中的init函数和destroy函数。OTcl中必须用next显式地调用父类的构造函数。</li>
+<li>OTcl函数必须通过对象来调用。变量$self和C++中的this相似，表示对象自身。OTcl函数都是虚函数。</li>
+<li>OTcl同样可以继承，，使用next关键字调用父类函数<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2>使用<code>instproc</code>定义类的方法，使用<code>proc</code>定义对象的方法，<code>proc</code>定义的方法只能用于该对象<h3 id="类的定义和生成"><a href="#类的定义和生成" class="headerlink" title="类的定义和生成"></a>类的定义和生成</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">% Class Box //使用关键字Class定义一个类Box</span><br><span class="line">% Box box1  //产生类的对象</span><br><span class="line">% box1 info Class   //使用info命令查看类和对象的关系</span><br><span class="line">% Box info instances</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>产生对象之后对，对对象进行变量定义，也可通过info命令来查看对象的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">% box1 set length 10</span><br><span class="line">% box1 info vars</span><br><span class="line">length</span><br></pre></td></tr></table></figure></p>
+<h3 id="init函数和destroy函数"><a href="#init函数和destroy函数" class="headerlink" title="init函数和destroy函数"></a>init函数和destroy函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">% Box instproc init &#123;args&#125;&#123;</span><br><span class="line">    $self set length 10</span><br><span class="line">    eval $self next $args</span><br><span class="line">&#125;</span><br><span class="line">% Box instproc destroy &#123;args&#125;&#123;</span><br><span class="line">    puts &quot;The instance is destroyed!&quot;</span><br><span class="line">    $self next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>OTcl支持类的多继承，唯一的要求是继承关系满足有向无环图。superclass用于声明继承。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Class Box</span><br><span class="line">Box instproc init&#123;&#125;&#123;    #定义类的初始函数</span><br><span class="line">    $self <span class="built_in">set</span> count0</span><br><span class="line">    $self next</span><br><span class="line">&#125;</span><br><span class="line">Box instproc Count&#123;&#125;&#123;   #定义类的成员函数Count</span><br><span class="line">    $self instvar count #重新声明变量count</span><br><span class="line">    incr count</span><br><span class="line">    $self next</span><br><span class="line">&#125;</span><br><span class="line">Safety instproc Count&#123;&#125;&#123;</span><br><span class="line">    $self instvar count</span><br><span class="line">    <span class="keyword">if</span>&#123;$count == <span class="number">0</span>&#125;&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;zero&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123; $count &#125;</span><br><span class="line">    $self next</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Class redBox -superclass Box    #redBox继承于类Box</span><br><span class="line">redBox redBox1</span><br><span class="line"></span><br><span class="line">redBox instproc init &#123;args&#125;&#123;</span><br><span class="line">    $self <span class="built_in">set</span> toppings&#123;&#125;</span><br><span class="line">    eval $self next $args       #调用父类Box的初始化函数</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">% redBox1 <span class="built_in">set</span> count</span><br><span class="line"><span class="number">0</span></span><br><span class="line">% redBox1 Count                 #调用父类Count函数</span><br><span class="line">% redBox1 <span class="built_in">set</span> count</span><br><span class="line"><span class="number">1</span></span><br><span class="line">% redBox1 get</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/28/机器学习从零开始/" rel="next" title="机器学习从零开始">
+                <i class="fa fa-chevron-left"></i> 机器学习从零开始
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/31/NS2学习笔记（二）/" rel="prev" title="NS2学习笔记（二）——分裂对象模型">
+                NS2学习笔记（二）——分裂对象模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">皇叔</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCL简介"><span class="nav-number">1.</span> <span class="nav-text">TCL简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量和变量赋值"><span class="nav-number">1.1.</span> <span class="nav-text">变量和变量赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">1.2.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表达式"><span class="nav-number">1.3.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令替代"><span class="nav-number">1.4.</span> <span class="nav-text">指令替代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程控制"><span class="nav-number">1.5.</span> <span class="nav-text">流程控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过程"><span class="nav-number">1.6.</span> <span class="nav-text">过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-number">1.7.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件"><span class="nav-number">1.8.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eval命令"><span class="nav-number">1.9.</span> <span class="nav-text">eval命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#error和catch命令"><span class="nav-number">1.10.</span> <span class="nav-text">error和catch命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upvar和uplevel命令"><span class="nav-number">1.11.</span> <span class="nav-text">upvar和uplevel命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OTcl简介"><span class="nav-number">2.</span> <span class="nav-text">OTcl简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OTcl和C-的区别"><span class="nav-number">2.1.</span> <span class="nav-text">OTcl和C++的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">2.2.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类的定义和生成"><span class="nav-number">2.2.1.</span> <span class="nav-text">类的定义和生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#init函数和destroy函数"><span class="nav-number">2.2.2.</span> <span class="nav-text">init函数和destroy函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承"><span class="nav-number">2.2.3.</span> <span class="nav-text">继承</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">皇叔</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

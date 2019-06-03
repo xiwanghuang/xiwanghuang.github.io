@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="解释器相关类的介绍和用途Tcl类封装了OTcl解释器的实例，并提供了访问解释器的方法，提供访问Tcl库的接口。该类提供如下操作方法：  1、获取Tcl实例句柄Tcl类只有一个实例，该实例在NS2启动时初始化，获取Tcl类的实例方法是Tcl&amp;amp; tcl = Tcl::instance(); 2、用来调用OTcl命令函数获得Tcl解释器引用之后可通过这个引用来调用OTcl中的控制台命令，现有4中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NS2学习笔记（二）——分裂对象模型">
+<meta property="og:url" content="http://yoursite.com/2019/05/31/NS2学习笔记（二）/index.html">
+<meta property="og:site_name" content="我是你皇叔">
+<meta property="og:description" content="解释器相关类的介绍和用途Tcl类封装了OTcl解释器的实例，并提供了访问解释器的方法，提供访问Tcl库的接口。该类提供如下操作方法：  1、获取Tcl实例句柄Tcl类只有一个实例，该实例在NS2启动时初始化，获取Tcl类的实例方法是Tcl&amp;amp; tcl = Tcl::instance(); 2、用来调用OTcl命令函数获得Tcl解释器引用之后可通过这个引用来调用OTcl中的控制台命令，现有4中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-03T03:52:12.718Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NS2学习笔记（二）——分裂对象模型">
+<meta name="twitter:description" content="解释器相关类的介绍和用途Tcl类封装了OTcl解释器的实例，并提供了访问解释器的方法，提供访问Tcl库的接口。该类提供如下操作方法：  1、获取Tcl实例句柄Tcl类只有一个实例，该实例在NS2启动时初始化，获取Tcl类的实例方法是Tcl&amp;amp; tcl = Tcl::instance(); 2、用来调用OTcl命令函数获得Tcl解释器引用之后可通过这个引用来调用OTcl中的控制台命令，现有4中">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/05/31/NS2学习笔记（二）/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>NS2学习笔记（二）——分裂对象模型 | 我是你皇叔</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我是你皇叔</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/NS2学习笔记（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="皇叔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是你皇叔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NS2学习笔记（二）——分裂对象模型
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-31 15:40:09" itemprop="dateCreated datePublished" datetime="2019-05-31T15:40:09+08:00">2019-05-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-03 11:52:12" itemprop="dateModified" datetime="2019-06-03T11:52:12+08:00">2019-06-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="解释器相关类的介绍和用途"><a href="#解释器相关类的介绍和用途" class="headerlink" title="解释器相关类的介绍和用途"></a>解释器相关类的介绍和用途</h1><h2 id="Tcl类"><a href="#Tcl类" class="headerlink" title="Tcl类"></a>Tcl类</h2><p>封装了OTcl解释器的实例，并提供了访问解释器的方法，提供访问Tcl库的接口。该类提供如下操作方法：</p>
+<ul>
+<li><strong>1、获取Tcl实例句柄</strong><br>Tcl类只有一个实例，该实例在NS2启动时初始化，获取Tcl类的实例方法是<br><code>Tcl&amp; tcl = Tcl::instance();</code></li>
+<li><p><strong>2、用来调用OTcl命令函数</strong><br>获得Tcl解释器引用之后可通过这个引用来调用OTcl中的控制台命令，现有4中方法通过Tcl实例来调用OTcl命令，主要区别是调用函数的不同。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tcl.eval(s)               <span class="comment">//执行已经存储进tcl返回区的命令，并返回给结果变量</span></span><br><span class="line">tcl.eval(<span class="keyword">char</span>* s)         <span class="comment">//执行字符串s，并在tcl的结果变量中保存执行结果</span></span><br><span class="line">tcl.evalc(<span class="keyword">const</span> cahr* s)  <span class="comment">//首先把s存储进tcl的命令缓冲区，然后在执行s命令，并在结果变量中返回结果</span></span><br><span class="line">tcl.evalf(<span class="keyword">const</span> <span class="keyword">char</span>* s,...)  <span class="comment">//类似于c语言中的printf命令，可以进行字符串的过滤，执行同tcl.evalc。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>3、传递/返回OTcl命令运行的结果</strong><br>当C++程序中调用一个OTcl命令是，解释器将执行结果保存在私有成员变量tcl_-&gt;results中，用户必须用tcl.result(void)来获取该执行结果，若结果是字符串，必须被转换为适当的类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tcl.evalc(<span class="string">"Simulator set NumberInterfaces_"</span>);</span><br><span class="line">cahr *ni = tcl.result();</span><br><span class="line"><span class="keyword">if</span>( atoi(ni)!=<span class="number">1</span> ) <span class="comment">//将字符串转换成整数</span></span><br><span class="line">  tcl.evalc(Simulator <span class="built_in">set</span> NumberInterfaces_1);</span><br></pre></td></tr></table></figure>
+<p>Tcl类的结果返回，与脚本执行的退出码也有所不同，例如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>( <span class="built_in">strcmp</span>(argv[<span class="number">1</span>],<span class="string">"now"</span>) == <span class="number">0</span> )&#123;</span><br><span class="line">    tcl.resultf(<span class="string">"%.17g"</span>,clock());</span><br><span class="line">    <span class="keyword">return</span> TCL_OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>4、存储并查询TclObject对象</strong><br>在NS2中的Tcl命令解释器中保存了一个存储对象地址的哈希表，NS2为每一个在模拟过程中生成的TclObject类以及派生类的对象在该哈希表中保存了一个指针，用于快速查找这些对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Tcl.enter(TclObjuct* o)   <span class="comment">//在哈希表中加入一个对象</span></span><br><span class="line">Tcl.lookup(<span class="keyword">char</span>* s)       <span class="comment">//在哈希表中查询名字为s的对象并返回</span></span><br><span class="line">Tcl.remove(TclObject* o)  <span class="comment">//在哈希表中删除该对象的地址</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>5、获的Tcl解释器的句柄，来对解释器进行直接访问</strong><br>函数<code>Tcl.interp(void)</code>是Tcl的解释器句柄，可以对其进行修改，加入自己的解释器。</p>
+<h2 id="TclObject类"><a href="#TclObject类" class="headerlink" title="TclObject类"></a>TclObject类</h2><p>TclObject类是OTcl/C++两个面向对象语言的类的基库，封装了绑定、跟踪和对相关命令的调用机制。</p>
+</li>
+<li><p>1、创建/清除模拟器组件的对象</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> tcp1 [<span class="keyword">new</span> Agent/TCP]</span><br><span class="line"><span class="keyword">delete</span> $tcp1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2、实现从C++类成员变量到OTcl类成员变量的绑定</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bind(<span class="string">"distance_"</span>,&amp;distance)   <span class="comment">//绑定实数变量</span></span><br><span class="line">bind_time(<span class="string">"lastSent_"</span>,&amp;lastSessSent)   <span class="comment">//绑定时间变量</span></span><br><span class="line">bind_bw       <span class="comment">//绑定带宽变量</span></span><br><span class="line">bind_boll     <span class="comment">//绑定布尔型变量</span></span><br></pre></td></tr></table></figure>
+<p>以上一个是OTcl变量名，一个是对应C++成员变量地址。</p>
+</li>
+<li>3、实现变量跟踪</li>
+<li>4、实现从C++类的成员函数到OTcl类的成员函数之间的一一对应<br>  通过command()函数事项。由于command()是TclObject的成员函数，所以它的派生类的每个对象都可以重写该函数。  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">argc:命令行参数个数</span></span><br><span class="line"><span class="comment">*argv:命令行参数向量：argv[0]:cmd;argv[1]指定想要的操作;argv[2...argc-1]用户还指定的参数</span></span><br><span class="line"><span class="comment">参数以字符串形式给出，若操作匹配成功则返回操作结果；若操作不匹配则调用父类command()一直到匹配为止，若都不匹配则返回错误信号</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Int MobileNode::command(<span class="keyword">int</span> argc,<span class="keyword">const</span> <span class="keyword">char</span>*<span class="keyword">const</span>* argv)</span><br><span class="line">&#123;</span><br><span class="line">  Tcl&amp;tcl = Tcl::instance();</span><br><span class="line">  <span class="keyword">if</span>( argc == <span class="number">5</span> )&#123;</span><br><span class="line">    <span class="keyword">if</span>( <span class="built_in">strcmp</span>(argv[<span class="number">1</span>],<span class="string">"setdest"</span>)==<span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>( set_destination( atof(argv[<span class="number">2</span>]),atof(argv[<span class="number">3</span>]),atof(argv[<span class="number">4</span>]) )&lt;<span class="number">0</span> )</span><br><span class="line">      <span class="keyword">return</span> TCL_ERROR;</span><br><span class="line">      <span class="keyword">return</span> TCL_OK;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span>( SRMAgent::command(argc,argv) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="TclClass类"><a href="#TclClass类" class="headerlink" title="TclClass类"></a>TclClass类</h2><p>TclClass类用于注册编译，保持了编译分级的层次结构，同时给OTcl对象提供了创建C++对象的方法。<br><code>set o [new B/A]</code><br>对象o的解释构造函数在ns第一次启动时执行：</p>
+<ul>
+<li>次构造函数以解释器类的名字B/A调用ABClass的构造函数；</li>
+<li>然后，ABClass构造函数调用其父类TclClass的构造函数；</li>
+<li>TclClass构造函数存储类的名字，并将对象插入TclClass对象链中；</li>
+<li>在simulator的初始化过程中，Tcl_AppInit(void)调用TclClass::bind(void)。bind()调用以解释类的名字作为参数的register{},register{}建立类层次，生成需要却还没有的类；</li>
+<li>最后，bind()为新类定义实例过程create-shadow和delete-shadow，生成并返回对象o。<h2 id="TclCommand类"><a href="#TclCommand类" class="headerlink" title="TclCommand类"></a>TclCommand类</h2>TclCommand类用于定义简单的全局解释命令。TclCommand类也是纯虚函数。需要派生类实现两个成员函数：构造函数和command()。<h2 id="EmbeddedTcl类"><a href="#EmbeddedTcl类" class="headerlink" title="EmbeddedTcl类"></a>EmbeddedTcl类</h2>用户对脚本~tclcl/tcl-object.tck进行修改，增加tcl/lib的文件来对ns进行扩展。对于新文件的装载是由该类完成的。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> EmbeddedTcl::load()&#123;</span><br><span class="line">  Tcl::instance().evalc(code_);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="InstVar类"><a href="#InstVar类" class="headerlink" title="InstVar类"></a>InstVar类</h2><p>包含了从OTcl访问C++类成员变量的方法。</p>
+<h1 id="OTcl与C-之间的连接"><a href="#OTcl与C-之间的连接" class="headerlink" title="OTcl与C++之间的连接"></a>OTcl与C++之间的连接</h1><p>主要实现以下三个功能：</p>
+<ul>
+<li>动态创建一个新的C++对象；</li>
+<li>访问该C++对象的属性；</li>
+<li>调用该C++对象的方法。<h2 id="调用C-对象的方法"><a href="#调用C-对象的方法" class="headerlink" title="调用C++对象的方法"></a>调用C++对象的方法</h2></li>
+<li>注册顶级命令<br>使用command方法</li>
+<li>暴露C++对象方法</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/29/NS2学习笔记（一）/" rel="next" title="NS2学习笔记（一）">
+                <i class="fa fa-chevron-left"></i> NS2学习笔记（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/03/C-不知名库函数/" rel="prev" title="C++不知名库函数">
+                C++不知名库函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">皇叔</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#解释器相关类的介绍和用途"><span class="nav-number">1.</span> <span class="nav-text">解释器相关类的介绍和用途</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tcl类"><span class="nav-number">1.1.</span> <span class="nav-text">Tcl类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TclObject类"><span class="nav-number">1.2.</span> <span class="nav-text">TclObject类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TclClass类"><span class="nav-number">1.3.</span> <span class="nav-text">TclClass类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TclCommand类"><span class="nav-number">1.4.</span> <span class="nav-text">TclCommand类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EmbeddedTcl类"><span class="nav-number">1.5.</span> <span class="nav-text">EmbeddedTcl类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InstVar类"><span class="nav-number">1.6.</span> <span class="nav-text">InstVar类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OTcl与C-之间的连接"><span class="nav-number">2.</span> <span class="nav-text">OTcl与C++之间的连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调用C-对象的方法"><span class="nav-number">2.1.</span> <span class="nav-text">调用C++对象的方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">皇叔</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
