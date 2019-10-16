@@ -99,17 +99,18 @@
   <meta name="description" content="线性回归相关一元线性回归导入的机器学习的包是sklearn1from sklearn.linear_model import LinearRegression 首先进行数据的预处理，将一维数据处理成模型规定的数据格式12x_data = data[:, 0, np.newaxis]y_data = data[:, 1, np.newaxis] 创建并拟合模型12model = LinearRegr">
 <meta name="keywords" content="Python,Machine Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习从零开始">
+<meta property="og:title" content="Python机器学习">
 <meta property="og:url" content="http://yoursite.com/2019/10/16/Python机器学习/index.html">
 <meta property="og:site_name" content="我是你皇叔">
 <meta property="og:description" content="线性回归相关一元线性回归导入的机器学习的包是sklearn1from sklearn.linear_model import LinearRegression 首先进行数据的预处理，将一维数据处理成模型规定的数据格式12x_data = data[:, 0, np.newaxis]y_data = data[:, 1, np.newaxis] 创建并拟合模型12model = LinearRegr">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/.com//1.png">
-<meta property="og:updated_time" content="2019-10-16T12:13:47.472Z">
+<meta property="og:image" content="https://i.loli.net/2019/10/16/UF6p4PLN3yBrAQd.png">
+<meta property="og:image" content="https://i.loli.net/2019/10/16/LKQq5Rm2DodsI9G.png">
+<meta property="og:updated_time" content="2019-10-16T13:37:12.206Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习从零开始">
+<meta name="twitter:title" content="Python机器学习">
 <meta name="twitter:description" content="线性回归相关一元线性回归导入的机器学习的包是sklearn1from sklearn.linear_model import LinearRegression 首先进行数据的预处理，将一维数据处理成模型规定的数据格式12x_data = data[:, 0, np.newaxis]y_data = data[:, 1, np.newaxis] 创建并拟合模型12model = LinearRegr">
-<meta name="twitter:image" content="http://yoursite.com/.com//1.png">
+<meta name="twitter:image" content="https://i.loli.net/2019/10/16/UF6p4PLN3yBrAQd.png">
 
 
 
@@ -129,7 +130,7 @@
   };
 </script>
 
-  <title>机器学习从零开始 | 我是你皇叔</title>
+  <title>Python机器学习 | 我是你皇叔</title>
   
 
 
@@ -345,7 +346,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">机器学习从零开始
+          <h1 class="post-title" itemprop="name headline">Python机器学习
 
               
             
@@ -371,7 +372,7 @@
                 
               
 
-              <time title="创建时间：2019-10-16 19:00:00 / 修改时间：20:13:47" itemprop="dateCreated datePublished" datetime="2019-10-16T19:00:00+08:00">2019-10-16</time>
+              <time title="创建时间：2019-10-16 19:00:00 / 修改时间：21:37:12" itemprop="dateCreated datePublished" datetime="2019-10-16T19:00:00+08:00">2019-10-16</time>
             
 
             
@@ -414,7 +415,13 @@
 <p>首先进行数据的预处理，将一维数据处理成模型规定的数据格式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x_data = data[:, <span class="number">0</span>, np.newaxis]</span><br><span class="line">y_data = data[:, <span class="number">1</span>, np.newaxis]</span><br></pre></td></tr></table></figure></p>
 <p>创建并拟合模型<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model = LinearRegression()</span><br><span class="line">model.fit(x_data, y_data)</span><br></pre></td></tr></table></figure></p>
 <p>画图<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(x_data, y_data, <span class="string">'b.'</span>)</span><br><span class="line">plt.plot(x_data, model.predict(x_data), <span class="string">'r'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
-<p><img src="/.com//1.png" alt="图一"></p>
+<p><img src="https://i.loli.net/2019/10/16/UF6p4PLN3yBrAQd.png" alt="1"></p>
+<h2 id="多元线性回归"><a href="#多元线性回归" class="headerlink" title="多元线性回归"></a>多元线性回归</h2><p>导包<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> PolynomialFeatures</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br></pre></td></tr></table></figure></p>
+<p>数据格式形如下表<br>Position | Level | Salary<br>-|-|-<br>Business Analyst    |1|    45000<br>Junior Consultant    |2|    50000<br>Senior Consultant    |3|    60000<br>Manager    |4|    80000</p>
+<p>同样的也要将数据处理成相应的格式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x_data = data[<span class="number">1</span>:, <span class="number">1</span>, np.newaxis]</span><br><span class="line">y_data = data[<span class="number">1</span>:, <span class="number">2</span>, np.newaxis]</span><br></pre></td></tr></table></figure></p>
+<p>使用多项式模型进行拟合<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">poly_reg = PolynomialFeatures(degree=<span class="number">9</span>)     </span><br><span class="line"><span class="comment"># degree的值可以调节多项式的特征,degree值越大，拟合度越高，但是太大可能会发生过拟合</span></span><br><span class="line">x_poly = poly_reg.fit_transform(x_data)     </span><br><span class="line"><span class="comment"># 根据degree的值进行特征处理（[0此方，1次方，2次方，...]）</span></span><br><span class="line">print(x_poly)</span><br><span class="line">lin_reg = LinearRegression()</span><br><span class="line">lin_reg.fit(x_poly, y_data)                 <span class="comment"># 模型训练</span></span><br></pre></td></tr></table></figure></p>
+<p>画图<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(x_data, y_data, <span class="string">'b.'</span>)</span><br><span class="line">plt.plot(x_data, lin_reg.predict(x_poly), c=<span class="string">'r'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.loli.net/2019/10/16/LKQq5Rm2DodsI9G.png" alt="2"></p>
 
       
     </div>
@@ -608,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性回归相关"><span class="nav-number">1.</span> <span class="nav-text">线性回归相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一元线性回归"><span class="nav-number">1.1.</span> <span class="nav-text">一元线性回归</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性回归相关"><span class="nav-number">1.</span> <span class="nav-text">线性回归相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一元线性回归"><span class="nav-number">1.1.</span> <span class="nav-text">一元线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多元线性回归"><span class="nav-number">1.2.</span> <span class="nav-text">多元线性回归</span></a></li></ol></li></ol></div>
             
 
           </div>
