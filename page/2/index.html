@@ -322,6 +322,203 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/25/Python启动/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="皇叔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是你皇叔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/25/Python启动/" class="post-title-link" itemprop="url">Python启动</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-25 14:21:22" itemprop="dateCreated datePublished" datetime="2019-05-25T14:21:22+08:00">2019-05-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-26 14:55:44" itemprop="dateModified" datetime="2019-05-26T14:55:44+08:00">2019-05-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#列表<br>在python中使用方括号来表示列表。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">'treck'</span>,<span class="string">'cabbondale'</span>]</span><br><span class="line">print(bicycles[<span class="number">0</span>])</span><br></pre></td></tr></table></figure></p>
+<p>使用[-1]可以访问列表最后一个元素<code>print(bicycles[-1])</code></p>
+<p>##列表的修改<br><code>bicycles[0] = &#39;giant&#39;</code></p>
+<p>##添加元素<br>append()方法添加元素至列表末尾；<br>insert()方法添加元素至指定位置。<br><code>bicycles.insert(1,bike)</code></p>
+<p>##删除元素<br>del()方法删除元素；<br><code>del bicycles[0]</code><br>pop()方法删除元素并返回元素值；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">last_ownd=bicycles.pop() //默认删除列表末尾的元素</span><br><span class="line">bicycles.pop(<span class="number">0</span>)          //删除指定位置的元素</span><br></pre></td></tr></table></figure></p>
+<p>remove()根据元素值删除元素(仅删除第一个匹配的元素)；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bicycles.remove(<span class="string">'treck'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>##组织列表<br>sort() 排序；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bicycles.sort()             //升序</span><br><span class="line">bicycles.sort(reverse=true) //降序</span><br></pre></td></tr></table></figure></p>
+<p>reverse()反转列表元素排列<br>len()返回列表长度</p>
+<p>##for循环遍历列表<br>使用for循环。python根据缩进来判断代码行与前一个代码行的关系。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> bicycle <span class="keyword">in</span> bicycles:</span><br><span class="line">    print(bicycle)</span><br></pre></td></tr></table></figure></p>
+<p>##使用range()创建数字列表<br>range(A,B)方法生成从A到B-1的值<br>函数list()将range()的结果直接转化为列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numbers = list(range(<span class="number">1</span>,<span class="number">6</span>))  //numbers为数字<span class="number">1</span><span class="number">-5</span>的列表</span><br></pre></td></tr></table></figure></p>
+<p>range()方法还能够指定步长如下，步长为2<br><code>range(1,10,2)</code><br>创建列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">squares = []</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>)</span><br><span class="line">    square = value**<span class="number">2</span></span><br><span class="line">    squares.append(square)</span><br></pre></td></tr></table></figure></p>
+<p>##列表解析<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squares = [value**<span class="number">2</span> <span class="keyword">for</span> value <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>)]</span><br></pre></td></tr></table></figure></p>
+<p>##使用列表的一部分——切片<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">'treck'</span>,<span class="string">'cabbondale'</span>,<span class="string">'giant'</span>]</span><br><span class="line">print(bicycles[<span class="number">0</span>:<span class="number">1</span>])</span><br><span class="line">print(bicycles[<span class="number">0</span>:])</span><br><span class="line">print(bicycles[:<span class="number">1</span>])</span><br><span class="line">print(bicycles[<span class="number">-3</span>:]) //最后三个</span><br></pre></td></tr></table></figure></p>
+<p>##复制列表<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">'treck'</span>,<span class="string">'cabbondale'</span>,<span class="string">'giant'</span>]</span><br><span class="line">my_bikes = bicycles[:]</span><br></pre></td></tr></table></figure></p>
+<p>不可以直接写<code>my_bikes = bicycles</code>这样无法得到两个列表。</p>
+<p>#选择结构<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == b) <span class="keyword">and</span> (a != <span class="number">0</span>):</span><br><span class="line">    a=<span class="number">0</span></span><br><span class="line"><span class="keyword">elif</span> b!= <span class="number">0</span>:</span><br><span class="line">    b=<span class="number">0</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    a=b</span><br></pre></td></tr></table></figure></p>
+<p>判断特定的值是否包含在列表中可使用关键字in，反之则使用not in。</p>
+<p>#字典<br>一个简单的字典如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alien_0 = &#123;<span class="string">'color'</span>: <span class="string">'green'</span>,<span class="string">'points'</span>: <span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在Python中，字典是一系列的键值对，键值对之间用逗号分隔。<br>添加键-值对可以直接输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alien_0[<span class="string">'x_position'</span>]=<span class="number">0</span></span><br><span class="line">alien_0[<span class="string">'y_position'</span>]=<span class="number">25</span></span><br></pre></td></tr></table></figure></p>
+<p>删除键值对<br><code>del alien_0[&#39;points&#39;]</code></p>
+<p>##字典的遍历</p>
+<ul>
+<li><p>使用for循环遍历所有键值对,方法items()返回一个键值对列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for key,value in alien_0.items():</span><br><span class="line">  print(&quot;\nKey:&quot;+key)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key()方法返回所有键的列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> alien_0.keys():</span><br><span class="line">  print(name.title())</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对遍历的结果进行排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> sorted(alien_0.keys()):</span><br><span class="line">  print(name.title())</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>##字典嵌套<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aliens=[alien_0,alien_1,alien_2]</span><br></pre></td></tr></table></figure></p>
+<p>#用户输入和while循环</p>
+<p>##用户输入</p>
+<ul>
+<li>input()进行用户输入,该方法会将用户的输入解读为字符串<br><code>message=input(&quot;请输入文本&quot;)</code></li>
+<li>使用int()方法可以获取数值输入<br>##while循环<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> message != <span class="string">'quit'</span>:</span><br><span class="line">    message = input()</span><br><span class="line">    print(message)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>break,continue的用法与c类似</p>
+<p>#函数</p>
+<p>##函数定义<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">abc</span><span class="params">(a)</span></span></span><br><span class="line"><span class="function">    <span class="title">print</span><span class="params">(<span class="string">"hello ,world"</span>+str<span class="params">(a)</span>)</span></span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">a</span>+1</span></span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/14/20190514学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1438,7 +1635,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1471,7 +1668,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
